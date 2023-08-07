@@ -1,20 +1,29 @@
 const game = (function () {
   let players = [];
+  console.log(players);
 
   //Cache DOM
   const playBtnEl = document.querySelector("#playBtn");
   const boardEl = document.querySelector(".board");
   const formsEl = document.querySelector(".getForms");
-  const playerName1El = document.querySelector("#playerOne");
-  const playerName2El = document.querySelector("#playerTwo");
 
-  //Binding
-  playBtnEl.addEventListener("click", builder);
-  playerName1El.addEventListener("input", (e) => {
-    createPlayer(e.target.value);
-  });
-  playerName2El.addEventListener("input", (e) => {
-    createPlayer(e.target.value);
+  //Setup Players
+  function getPlayerNames() {
+    const playerName1El = document.querySelector("#playerOne").value;
+    const playerName2El = document.querySelector("#playerTwo").value;
+    createPlayer(playerName1El, "X");
+    createPlayer(playerName2El, "O");
+    builder();
+  }
+
+  //Listener
+  function listener(grid) {
+    grid.addEventListener("click", () => {
+      grid.style.backgroundColor = "red";
+    });
+  }
+  playBtnEl.addEventListener("click", () => {
+    getPlayerNames();
   });
 
   //Builder
@@ -24,9 +33,11 @@ const game = (function () {
   }
 
   //Factory Players
-  createPlayer = function (name) {
-    const playerName = name.toLowerCase;
-    players.push({ name });
+  createPlayer = function (name, marker) {
+    const playerName = name.toLowerCase();
+    const playerMarker = marker;
+    players.push({ name, marker });
+    console.log(players);
   };
 
   //Creator
@@ -45,12 +56,6 @@ const game = (function () {
       }
     }
   }
-  //Listener
-  function listener(grid) {
-    grid.addEventListener("click", () => {
-      grid.style.backgroundColor = "red";
-    });
-  }
 
   //Renderer
   function render(n) {
@@ -64,9 +69,7 @@ const game = (function () {
   }
 })();
 
-// const gods = [];
-
-// let test1 = "Odin";
-// let test2 = "Thor";
-
-// gods.push(test1, test2);
+//Turn Module
+//DisplayController Module
+//ScoreBoard Module
+//

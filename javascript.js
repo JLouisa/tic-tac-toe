@@ -22,17 +22,17 @@ const game = (function () {
     for (let i = 0; i < 3; i++) {
       gameBoard[i] = document.createElement("div");
       gameBoard[i].classList.add("square", `row${i}`);
-      board.appendChild(gameBoard[i]);
+      render(gameBoard[i]);
       for (let j = 0; j < 2; j++) {
         gameBoard[i][j] = document.createElement("div");
         gameBoard[i][j].classList.add("square", `row${i}Col${j}`);
-        board.appendChild(gameBoard[i][j]);
+        render(gameBoard[i][j]);
       }
     }
   }
   //Renderer
-  function render(parent) {
-    parent.appendChild(board);
+  function render(n) {
+    board.appendChild(n);
   }
   //Hider
   function hider() {

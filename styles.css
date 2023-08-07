@@ -57,3 +57,51 @@ footer {
   width: 4rem;
   height: auto;
 }
+/* ------------------------------------- */
+#playBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin: 10px;
+  outline: none;
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #009879, #009879);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #ffffff;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  padding: 40px 80px;
+  vertical-align: top;
+  white-space: nowrap;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow 0.2s;
+}
+
+#playBtn:hover {
+  background: #008369;
+}
+
+#playBtn:active {
+  transform: scale(1.08);
+  transition: ease-in;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

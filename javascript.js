@@ -3,7 +3,9 @@ const game = (function () {
 
   //Cache DOM
   const playBtnEl = document.querySelector("#playBtn");
-  const board = document.querySelector(".board");
+  const boardEl = document.querySelector(".board");
+  const playerName1El = document.querySelector("#playerOne");
+  const playerName2El = document.querySelector("#playerTwo");
 
   //Binding
   playBtnEl.addEventListener("click", () => {
@@ -15,7 +17,9 @@ const game = (function () {
   createPlayer = function (name, marker) {
     const playerName = name;
     const playerMarker = marker;
+    players.push({ name, marker });
   };
+
   //Creator
   function createBoard() {
     let gameBoard = [];
@@ -32,11 +36,11 @@ const game = (function () {
   }
   //Renderer
   function render(n) {
-    board.appendChild(n);
+    boardEl.appendChild(n);
   }
   //Hider
   function hider() {
     playBtnEl.setAttribute("style", "display: none;");
-    board.setAttribute("style", "display: grid;");
+    boardEl.setAttribute("style", "display: grid;");
   }
 })();

@@ -1,9 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap");
+
 :root {
   font-family: inherit;
   font-size: 16px;
+  --bg-color: #f6f8fa;
+  --border-color: #d0d7de;
+  --dark-color: #1f2329;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  background-color: var(--bg-color);
 }
 
 h1 {
-  color: purple;
   text-align: center;
+  font-size: 2rem;
+  font-weight: 300;
+  font-family: Cinzel;
+}
+
+nav {
+  border-bottom: 1px solid var(--border-color);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navi {
+  width: 100%;
+  max-width: 980px;
+  text-align: center;
+}
+
+.main {
+  width: 100%;
+  min-height: 80vh;
+  max-width: 980px;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+  gap: 10px;
+}
+
+.gitHub {
+  width: 4rem;
+  height: auto;
 }

@@ -4,20 +4,30 @@ const game = (function () {
   //Cache DOM
   const playBtnEl = document.querySelector("#playBtn");
   const boardEl = document.querySelector(".board");
+  const formsEl = document.querySelector(".getForms");
   const playerName1El = document.querySelector("#playerOne");
   const playerName2El = document.querySelector("#playerTwo");
 
   //Binding
-  playBtnEl.addEventListener("click", () => {
-    createBoard();
-    hider();
+  playBtnEl.addEventListener("click", builder);
+  playerName1El.addEventListener("input", (e) => {
+    createPlayer(e.target.value);
+  });
+  playerName2El.addEventListener("input", (e) => {
+    createPlayer(e.target.value);
   });
 
+  //Builder
+  function builder() {
+    createBoard();
+    hider();
+    console.log(players);
+  }
+
   //Factory Players
-  createPlayer = function (name, marker) {
-    const playerName = name;
-    const playerMarker = marker;
-    players.push({ name, marker });
+  createPlayer = function (name) {
+    const playerName = name.toLowerCase;
+    players.push({ name });
   };
 
   //Creator
@@ -40,7 +50,15 @@ const game = (function () {
   }
   //Hider
   function hider() {
+    formsEl.setAttribute("style", "display: none;");
     playBtnEl.setAttribute("style", "display: none;");
     boardEl.setAttribute("style", "display: grid;");
   }
 })();
+
+// const gods = [];
+
+// let test1 = "Odin";
+// let test2 = "Thor";
+
+// gods.push(test1, test2);

@@ -1,59 +1,42 @@
-// const game = (function () {
-//   (createPlayer = function (name, marker) {
-//     const playerName = name;
-//     const playerMarker = marker;
-//     return { name, marker };
-//   }),
-//     (binding = () => {
-//       const playBtn = document.querySelector("#playBtn");
-//       listener(playBtn);
-//       const board = document.querySelector(".board");
-//       render(board);
-//     }),
-//     (listener = (event) => {
-//       event.addEventListener("click", createBoard);
-//     }),
-//     (createBoard = () => {
-//       let gameBoard = [];
-//       for (let i = 0; i < 3; i++) {
-//         gameBoard[i] = document.createElement("div");
-//         gameBoard[i].classList.add("square", `row${i}`);
-//         board.appendChild(gameBoard[i]);
-//         for (let j = 0; j < 2; j++) {
-//           gameBoard[i][j] = document.createElement("div");
-//           gameBoard[i][j].classList.add("square", `row${i}Col${j}`);
-//           board.appendChild(gameBoard[i][j]);
-//         }
-//       }
-//     }),
-//     (render = (parent) => {
-//       parent.appendChild(board);
-//     });
-// })();
+const game = (function () {
+  let players = [];
 
-function hideBtn() {
-  playBtn.setAttribute("style", "display: none;");
-  board.setAttribute("style", "display: grid;");
-}
+  //Cache DOM
+  const playBtnEl = document.querySelector("#playBtn");
+  const board = document.querySelector(".board");
 
-const playBtn = document.querySelector("#playBtn");
-playBtn.addEventListener("click", () => {
-  createBoard();
-  hideBtn();
-});
+  //Binding
+  playBtnEl.addEventListener("click", () => {
+    createBoard();
+    hider();
+  });
 
-const board = document.querySelector(".board");
-
-function createBoard() {
-  let gameBoard = [];
-  for (let i = 0; i < 3; i++) {
-    gameBoard[i] = document.createElement("div");
-    gameBoard[i].classList.add("square", `row${i}`);
-    board.appendChild(gameBoard[i]);
-    for (let j = 0; j < 2; j++) {
-      gameBoard[i][j] = document.createElement("div");
-      gameBoard[i][j].classList.add("square", `row${i}Col${j}`);
-      board.appendChild(gameBoard[i][j]);
+  //Factory Players
+  createPlayer = function (name, marker) {
+    const playerName = name;
+    const playerMarker = marker;
+  };
+  //Creator
+  function createBoard() {
+    let gameBoard = [];
+    for (let i = 0; i < 3; i++) {
+      gameBoard[i] = document.createElement("div");
+      gameBoard[i].classList.add("square", `row${i}`);
+      board.appendChild(gameBoard[i]);
+      for (let j = 0; j < 2; j++) {
+        gameBoard[i][j] = document.createElement("div");
+        gameBoard[i][j].classList.add("square", `row${i}Col${j}`);
+        board.appendChild(gameBoard[i][j]);
+      }
     }
   }
-}
+  //Renderer
+  function render(parent) {
+    parent.appendChild(board);
+  }
+  //Hider
+  function hider() {
+    playBtnEl.setAttribute("style", "display: none;");
+    board.setAttribute("style", "display: grid;");
+  }
+})();

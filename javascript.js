@@ -21,7 +21,6 @@ const game = (function () {
   function builder() {
     createBoard();
     hider();
-    console.log(players);
   }
 
   //Factory Players
@@ -37,13 +36,22 @@ const game = (function () {
       gameBoard[i] = document.createElement("div");
       gameBoard[i].classList.add("square", `row${i}`);
       render(gameBoard[i]);
+      listener(gameBoard[i]);
       for (let j = 0; j < 2; j++) {
         gameBoard[i][j] = document.createElement("div");
         gameBoard[i][j].classList.add("square", `row${i}Col${j}`);
         render(gameBoard[i][j]);
+        listener(gameBoard[i][j]);
       }
     }
   }
+  //Listener
+  function listener(grid) {
+    grid.addEventListener("click", () => {
+      grid.style.backgroundColor = "red";
+    });
+  }
+
   //Renderer
   function render(n) {
     boardEl.appendChild(n);

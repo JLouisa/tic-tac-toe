@@ -96,7 +96,7 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  margin-top: 25px;
 }
 
 .content {
@@ -120,4 +120,46 @@ footer {
   height: 100%;
   background-color: white;
   border: 1px solid black;
+}
+
+.getInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  gap: 20px;
+  padding: 5px 12px;
+  font-size: 1.5rem;
+  line-height: 20px;
+  color: #24292e;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  border-radius: 6px;
+  outline: none;
+  box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
+}
+
+.getForms {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+input[type="text"] {
+  width: 20rem;
+  height: 2rem;
+  margin: 5px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: darkgrey;
+}
+
+form:focus {
+  border-color: #0366d6;
+  outline: none;
+  box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
 }

@@ -3,7 +3,6 @@ const game = (function () {
   let gameBoard = [];
   let boardGrid = [];
   let playerOneTurn = true;
-  let fullBoard = false;
 
   //Cache DOM
   const playBtnEl = document.querySelector("#playBtn");
@@ -68,9 +67,6 @@ const game = (function () {
     gameBoard.forEach((n) => {
       n.grid.textContent = n.marker;
     });
-    // for (n of gameBoard) {
-    //   n.grid.textContent = n.marker;
-    // }
   }
 
   //Intermediate
@@ -91,13 +87,13 @@ const game = (function () {
   function playerTurns(grid, i) {
     switch (playerOneTurn) {
       case true:
-        interHold(players[0].marker, grid, i);
         playerOneTurn = false;
+        interHold(players[0].marker, grid, i);
         break;
 
       case false:
-        interHold(players[1].marker, grid, i);
         playerOneTurn = true;
+        interHold(players[1].marker, grid, i);
         break;
     }
   }
@@ -105,7 +101,6 @@ const game = (function () {
   //Reset Module
   function resetFunc() {
     playerOneTurn = true;
-    fullBoard = false;
     console.log("1 ");
     console.log(gameBoard);
     gameBoard.forEach((n) => {
@@ -122,7 +117,7 @@ const game = (function () {
         //First Row
         (gameBoard[x].marker == gameBoard[x + 1].marker &&
           gameBoard[x + 1].marker == gameBoard[x + 2].marker &&
-          gameBoard[x].marker == "X") ||
+          gameBoard[x + 1].marker == "X") ||
         (gameBoard[x].marker == gameBoard[x + 1].marker &&
           gameBoard[x + 1].marker == gameBoard[x + 2].marker &&
           gameBoard[x].marker == "O") ||
@@ -133,10 +128,10 @@ const game = (function () {
         (gameBoard[x + 3].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 5].marker &&
           gameBoard[x + 3].marker == "O") ||
-        //Third Row
+        // Third Row
         (gameBoard[x].marker == gameBoard[x + 3].marker &&
           gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
-          gameBoard[x + 1].marker == "X") ||
+          gameBoard[x].marker == "X") ||
         (gameBoard[x].marker == gameBoard[x + 3].marker &&
           gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
           gameBoard[x].marker == "O") ||
@@ -150,7 +145,7 @@ const game = (function () {
         //Second Column
         (gameBoard[x + 1].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 7].marker &&
-          gameBoard[x + 1].marker == "X") ||
+          gameBoard[x + 4].marker == "X") ||
         (gameBoard[x + 1].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 7].marker &&
           gameBoard[x + 1].marker == "O") ||
@@ -177,6 +172,7 @@ const game = (function () {
           gameBoard[x + 2].marker == "O")
       ) {
         alert("You have won");
+        resetFunc();
       }
     }
     let b = 0;

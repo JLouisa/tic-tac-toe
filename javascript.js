@@ -37,7 +37,7 @@ const game = (function () {
         () => {
           playerTurns(n.grid, gameBoard.indexOf(n));
         },
-        { once: isListening }
+        { once: true }
       );
     });
   }
@@ -70,6 +70,7 @@ const game = (function () {
     for (n of gameBoard) {
       n.grid.textContent = n.marker;
     }
+    gameLogic();
   }
 
   //Intermediate
@@ -110,5 +111,46 @@ const game = (function () {
     render();
     recurListener();
   }
+
+  //Game Logic
+  function gameLogic() {
+    for (let x = 0; x < 1; x++)
+      if (
+        (gameBoard[x].marker == gameBoard[x + 1].marker &&
+          gameBoard[x].marker == gameBoard[x + 2].marker &&
+          gameBoard[x].marker == "X") ||
+        gameBoard[x].marker == "O" ||
+        (gameBoard[x].marker == gameBoard[x + 3].marker &&
+          gameBoard[x].marker == gameBoard[x + 6].marker &&
+          gameBoard[x].marker == "X") ||
+        gameBoard[x].marker == "O" ||
+        (gameBoard[x + 3].marker == gameBoard[x + 1].marker &&
+          gameBoard[x + 3].marker == gameBoard[x + 2].marker &&
+          gameBoard[x + 3].marker == "X") ||
+        gameBoard[x].marker == "O" ||
+        (gameBoard[x + 1].marker == gameBoard[x + 3].marker &&
+          gameBoard[x + 1].marker == gameBoard[x + 6].marker &&
+          gameBoard[x + 1].marker == "X") ||
+        gameBoard[x].marker == "O" ||
+        (gameBoard[x + 2].marker == gameBoard[x + 3].marker &&
+          gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
+          gameBoard[x + 2].marker == "X") ||
+        gameBoard[x].marker == "O" ||
+        (gameBoard[x].marker == gameBoard[x + 4].marker &&
+          gameBoard[x + 4].marker == gameBoard[x + 8].marker &&
+          gameBoard[x].marker == "X") ||
+        gameBoard[x].marker == "O" ||
+        (gameBoard[x + 2].marker == gameBoard[x + 2].marker &&
+          gameBoard[x + 4].marker == gameBoard[x + 6].marker &&
+          gameBoard[x + 2].marker == "X") ||
+        gameBoard[x].marker == "O"
+      ) {
+        alert("You have won");
+      }
+  }
   //ScoreBoard Module
 })();
+
+// 0 1 2
+// 3 4 5
+// 6 7 8

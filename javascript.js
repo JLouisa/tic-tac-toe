@@ -21,7 +21,7 @@ const game = (function () {
     hider();
   }
 
-  //Listener
+  //Init Listener
   function listener(grid, i) {
     grid.addEventListener(
       "click",
@@ -38,10 +38,18 @@ const game = (function () {
     resetFunc();
   });
 
+  //Recurring Listener
+  function recurListener() {
+    for (n of gameBoard) {
+      n.grid.addEventListener("click", () => {
+        playerTurns();
+      });
+    }
+  }
+
   //Action after Listening
   function action(grid, i) {
     playerTurns(grid, i);
-    // grid.textContent = gameBoard[i].marker;
   }
 
   //Factory for Players
@@ -69,7 +77,6 @@ const game = (function () {
 
   //Renderer
   function render() {
-    // function render(pMark, i, ...a) {
     for (n of gameBoard) {
       n.grid.textContent = n.marker;
     }
@@ -116,6 +123,7 @@ const game = (function () {
       n.marker = "";
     });
     render();
+    recurListener();
   }
   //ScoreBoard Module
   //

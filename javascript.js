@@ -32,17 +32,14 @@ const game = (function () {
   //Recurring Listener
   function recurListener() {
     gameBoard.forEach((n) => {
-      console.log("L1 " + n.grid);
       n.grid.addEventListener(
         "click",
         () => {
-          console.log(gameBoard.indexOf(n));
           playerTurns(n.grid, gameBoard.indexOf(n));
         },
         { once: isListening }
       );
     });
-    console.log(gameBoard);
   }
 
   //Factory for Players
@@ -103,12 +100,6 @@ const game = (function () {
     }
   }
 
-  // // DisplayController Module
-  // function displayController(grid) {
-  //   gameBoard.push({ grid, marker: "" });
-  //   recurListener();
-  // }
-
   //Reset Module
   function resetFunc() {
     playerOneTurn = true;
@@ -120,5 +111,4 @@ const game = (function () {
     recurListener();
   }
   //ScoreBoard Module
-  //
 })();

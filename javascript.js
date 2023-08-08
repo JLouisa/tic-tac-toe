@@ -21,14 +21,23 @@ const game = (function () {
 
   //Listener
   function listener(grid, i) {
-    grid.addEventListener("click", () => {
-      playerTurns(i);
-      grid.textContent = gameBoard[i].marker;
-    });
+    grid.addEventListener(
+      "click",
+      () => {
+        action(grid, i);
+      },
+      { once: true }
+    );
   }
   playBtnEl.addEventListener("click", () => {
     getPlayerNames();
   });
+
+  //Action after Listening
+  function action(grid, i) {
+    playerTurns(i);
+    grid.textContent = gameBoard[i].marker;
+  }
 
   //Factory for Players
   createPlayer = function (name, marker) {
@@ -85,8 +94,8 @@ const game = (function () {
     gameBoard.push({ grid, marker: "" });
   }
 
-  //Disable marked grids
-
   //ScoreBoard Module
   //
 })();
+
+let test;

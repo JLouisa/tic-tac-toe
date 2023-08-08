@@ -6,39 +6,34 @@ const game = (function () {
   const playBtnEl = document.querySelector("#playBtn");
   const boardEl = document.querySelector(".board");
   const formsEl = document.querySelector(".getForms");
+  const playerName1El = document.querySelector("#playerOne");
+  const playerName2El = document.querySelector("#playerTwo");
 
   //Setup Players
   function getPlayerNames() {
-    const playerName1El = document.querySelector("#playerOne").value;
-    const playerName2El = document.querySelector("#playerTwo").value;
-    createPlayer(playerName1El, "X");
-    createPlayer(playerName2El, "O");
-    builder();
+    createPlayer(playerName1El.value, "X");
+    createPlayer(playerName2El.value, "O");
+    createBoard();
+    hider();
   }
 
   //Listener
   function listener(grid) {
     grid.addEventListener("click", () => {
       grid.style.backgroundColor = "red";
+      console.log(grid);
     });
   }
+
   playBtnEl.addEventListener("click", () => {
     getPlayerNames();
   });
 
-  //Builder
-  function builder() {
-    createBoard();
-    hider();
-  }
-
-  //Factory Players
+  //Factory for Players
   createPlayer = function (name, marker) {
     const playerName = name.toLowerCase();
     const playerMarker = marker;
     players.push({ name, marker });
-    console.log(players[0]);
-    console.log(players[1]);
   };
 
   //Creator
@@ -53,9 +48,10 @@ const game = (function () {
   }
 
   //Renderer
-  function render(n) {
-    boardEl.appendChild(n);
+  function render(data) {
+    boardEl.appendChild(data);
   }
+
   //Hider
   function hider() {
     formsEl.setAttribute("style", "display: none;");
@@ -68,11 +64,12 @@ const game = (function () {
     switch (playerOneTurn) {
       case "true": {
         ("route 1");
+        players[0].marker;
         playerOneTurn = false;
         break;
       }
       case "false": {
-        ("route 2");
+        players[1].marker;
         playerOneTurn = true;
         break;
       }

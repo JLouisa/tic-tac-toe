@@ -23,10 +23,13 @@ const game = (function () {
   //Listener
   function listener(grid, i) {
     grid.addEventListener("click", () => {
+      playerTurns(i);
       grid.textContent = gameBoard[i].marker;
       console.log(grid);
-      console.log(gameBoard[0].marker);
-      playerTurns();
+
+      // render(i);
+      // console.log(gameBoard[i]);
+      // console.log(gameBoard[i].marker);
     });
   }
   playBtnEl.addEventListener("click", () => {
@@ -44,11 +47,12 @@ const game = (function () {
   function createBoard() {
     for (let i = 0; i < 9; i++) {
       boardGrid[i] = document.createElement("div");
+      boardEl.appendChild(boardGrid[i]);
       Namer(boardGrid[i], [i]);
-      render(boardGrid[i]);
       displayController(boardGrid[i]);
       listener(boardGrid[i], [i]);
     }
+    // render();
   }
 
   //Name Class
@@ -57,12 +61,13 @@ const game = (function () {
   }
 
   //Renderer
-  function render(data) {
-    boardEl.appendChild(data);
-    // for (n in gameBoard)
-    //   n.forEach((blocks) => {
-    //     console.log(blocks);
-    //   });
+  function render(pMark, i) {
+    gameBoard[i].marker = pMark;
+    console.log(pMark);
+    console.log(gameBoard[i].marker);
+    // for (block in gameBoard) {
+    //   console.log(gameBoard[block].marker);
+    // }
   }
 
   //Hider
@@ -73,17 +78,17 @@ const game = (function () {
   }
 
   //Turn Module
-  function playerTurns() {
+  function playerTurns(i) {
     switch (playerOneTurn) {
       case true:
-        players[0].marker;
         console.log("Player One turn");
+        render(players[0].marker, i);
         playerOneTurn = false;
         break;
 
       case false:
-        players[1].marker;
         console.log("Player Two turn");
+        render(players[1].marker, i);
         playerOneTurn = true;
         break;
     }
@@ -91,7 +96,7 @@ const game = (function () {
 
   // DisplayController Module
   function displayController(grid) {
-    gameBoard.push({ grid, marker: "X" });
+    gameBoard.push({ grid, marker: "" });
     // render();
   }
 

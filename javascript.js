@@ -3,7 +3,7 @@ const game = (function () {
   let gameBoard = [];
   let boardGrid = [];
   let playerOneTurn = true;
-  let isListening = true;
+  let fullBoard = false;
 
   //Cache DOM
   const playBtnEl = document.querySelector("#playBtn");
@@ -28,8 +28,6 @@ const game = (function () {
   resetBtn.addEventListener("click", () => {
     resetFunc();
   });
-
-  //Recurring Listener
   function recurListener() {
     gameBoard.forEach((n) => {
       n.grid.addEventListener(
@@ -67,16 +65,19 @@ const game = (function () {
 
   //Renderer
   function render() {
-    for (n of gameBoard) {
+    gameBoard.forEach((n) => {
       n.grid.textContent = n.marker;
-    }
-    gameLogic();
+    });
+    // for (n of gameBoard) {
+    //   n.grid.textContent = n.marker;
+    // }
   }
 
   //Intermediate
   function interHold(pMark, i, a) {
     gameBoard[a].marker = pMark;
     render();
+    gameLogic();
   }
 
   //Hider
@@ -104,49 +105,76 @@ const game = (function () {
   //Reset Module
   function resetFunc() {
     playerOneTurn = true;
-    isListening = true;
+    fullBoard = false;
+    console.log("1 ");
+    console.log(gameBoard);
     gameBoard.forEach((n) => {
       n.marker = "";
     });
     render();
     recurListener();
+    console.log("2 ");
+    console.log(gameBoard);
   }
 
   //Game Logic
   function gameLogic() {
-    for (let x = 0; x < 1; x++)
+    for (let x = 0; x < 1; x++) {
       if (
         (gameBoard[x].marker == gameBoard[x + 1].marker &&
-          gameBoard[x].marker == gameBoard[x + 2].marker &&
+          gameBoard[x + 1].marker == gameBoard[x + 2].marker &&
           gameBoard[x].marker == "X") ||
-        gameBoard[x].marker == "O" ||
         (gameBoard[x].marker == gameBoard[x + 3].marker &&
           gameBoard[x].marker == gameBoard[x + 6].marker &&
           gameBoard[x].marker == "X") ||
-        gameBoard[x].marker == "O" ||
         (gameBoard[x + 3].marker == gameBoard[x + 1].marker &&
           gameBoard[x + 3].marker == gameBoard[x + 2].marker &&
           gameBoard[x + 3].marker == "X") ||
-        gameBoard[x].marker == "O" ||
         (gameBoard[x + 1].marker == gameBoard[x + 3].marker &&
           gameBoard[x + 1].marker == gameBoard[x + 6].marker &&
           gameBoard[x + 1].marker == "X") ||
-        gameBoard[x].marker == "O" ||
         (gameBoard[x + 2].marker == gameBoard[x + 3].marker &&
           gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
           gameBoard[x + 2].marker == "X") ||
-        gameBoard[x].marker == "O" ||
         (gameBoard[x].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 8].marker &&
           gameBoard[x].marker == "X") ||
-        gameBoard[x].marker == "O" ||
-        (gameBoard[x + 2].marker == gameBoard[x + 2].marker &&
+        (gameBoard[x + 2].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 6].marker &&
           gameBoard[x + 2].marker == "X") ||
-        gameBoard[x].marker == "O"
+        (gameBoard[x].marker == gameBoard[x + 1].marker &&
+          gameBoard[x + 1].marker == gameBoard[x + 2].marker &&
+          gameBoard[x].marker == "O") ||
+        (gameBoard[x].marker == gameBoard[x + 3].marker &&
+          gameBoard[x].marker == gameBoard[x + 6].marker &&
+          gameBoard[x].marker == "O") ||
+        (gameBoard[x + 3].marker == gameBoard[x + 1].marker &&
+          gameBoard[x + 3].marker == gameBoard[x + 2].marker &&
+          gameBoard[x].marker == "O") ||
+        (gameBoard[x + 1].marker == gameBoard[x + 3].marker &&
+          gameBoard[x + 1].marker == gameBoard[x + 6].marker &&
+          gameBoard[x].marker == "O") ||
+        (gameBoard[x + 2].marker == gameBoard[x + 3].marker &&
+          gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
+          gameBoard[x].marker == "O") ||
+        (gameBoard[x].marker == gameBoard[x + 4].marker &&
+          gameBoard[x + 4].marker == gameBoard[x + 8].marker &&
+          gameBoard[x].marker == "O") ||
+        (gameBoard[x + 2].marker == gameBoard[x + 2].marker &&
+          gameBoard[x + 4].marker == gameBoard[x + 6].marker &&
+          gameBoard[x].marker == "O")
       ) {
         alert("You have won");
       }
+    }
+    // for (let y = 0; y < 9; y++) {
+    //   if (gameBoard[y].marker !== "") {
+    //     fullBoard = true;
+    //   } else if (fullBoard == true && y > 7) {
+    //     resetFunc();
+    //   }
+    // }
   }
+
   //ScoreBoard Module
 })();

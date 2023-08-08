@@ -116,6 +116,11 @@ footer {
   padding: 0;
 }
 
+.sidebar {
+  /* background-color: red; */
+  grid-area: 1/1/4/2;
+}
+
 .square {
   display: flex;
   justify-content: center;
@@ -127,7 +132,7 @@ footer {
   border: 1px solid black;
   font-size: 6rem;
   user-select: none;
-  font-family: "Preahvihear", sans-serif;
+  /* font-family: "Preahvihear", sans-serif; */
 }
 
 .getInfo {

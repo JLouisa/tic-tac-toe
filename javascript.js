@@ -2,7 +2,6 @@ const game = (function () {
   let players = [];
   let gameBoard = [];
   let boardGrid = [];
-  let markers = "";
   let playerOneTurn = true;
 
   //Cache DOM
@@ -25,11 +24,6 @@ const game = (function () {
     grid.addEventListener("click", () => {
       playerTurns(i);
       grid.textContent = gameBoard[i].marker;
-      console.log(grid);
-
-      // render(i);
-      // console.log(gameBoard[i]);
-      // console.log(gameBoard[i].marker);
     });
   }
   playBtnEl.addEventListener("click", () => {
@@ -52,7 +46,6 @@ const game = (function () {
       displayController(boardGrid[i]);
       listener(boardGrid[i], [i]);
     }
-    // render();
   }
 
   //Name Class
@@ -63,11 +56,6 @@ const game = (function () {
   //Renderer
   function render(pMark, i) {
     gameBoard[i].marker = pMark;
-    console.log(pMark);
-    console.log(gameBoard[i].marker);
-    // for (block in gameBoard) {
-    //   console.log(gameBoard[block].marker);
-    // }
   }
 
   //Hider
@@ -81,13 +69,11 @@ const game = (function () {
   function playerTurns(i) {
     switch (playerOneTurn) {
       case true:
-        console.log("Player One turn");
         render(players[0].marker, i);
         playerOneTurn = false;
         break;
 
       case false:
-        console.log("Player Two turn");
         render(players[1].marker, i);
         playerOneTurn = true;
         break;
@@ -97,7 +83,6 @@ const game = (function () {
   // DisplayController Module
   function displayController(grid) {
     gameBoard.push({ grid, marker: "" });
-    // render();
   }
 
   //Disable marked grids

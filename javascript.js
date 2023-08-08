@@ -3,6 +3,7 @@ const game = (function () {
   let gameBoard = [];
   let boardGrid = [];
   let playerOneTurn = true;
+  let isListening = true;
 
   //Cache DOM
   const playBtnEl = document.querySelector("#playBtn");
@@ -10,6 +11,7 @@ const game = (function () {
   const formsEl = document.querySelector(".getForms");
   const playerName1El = document.querySelector("#playerOne");
   const playerName2El = document.querySelector("#playerTwo");
+  const resetBtn = document.querySelector("#reset");
 
   //Setup Players
   function getPlayerNames() {
@@ -26,17 +28,20 @@ const game = (function () {
       () => {
         action(grid, i);
       },
-      { once: true }
+      { once: isListening }
     );
   }
   playBtnEl.addEventListener("click", () => {
     getPlayerNames();
   });
+  resetBtn.addEventListener("click", () => {
+    resetFunc();
+  });
 
   //Action after Listening
   function action(grid, i) {
-    playerTurns(i);
-    grid.textContent = gameBoard[i].marker;
+    playerTurns(grid, i);
+    // grid.textContent = gameBoard[i].marker;
   }
 
   //Factory for Players
@@ -58,13 +63,22 @@ const game = (function () {
   }
 
   //Name Class
-  function Namer(name, ilet) {
-    name.classList.add("square", `row${ilet}`);
+  function Namer(name, i) {
+    name.classList.add("square", `row${i}`);
   }
 
   //Renderer
-  function render(pMark, i) {
-    gameBoard[i].marker = pMark;
+  function render() {
+    // function render(pMark, i, ...a) {
+    for (n of gameBoard) {
+      n.grid.textContent = n.marker;
+    }
+  }
+
+  //Intermediate
+  function interHold(pMark, i, ...a) {
+    gameBoard[a[0]].marker = pMark;
+    render();
   }
 
   //Hider
@@ -75,15 +89,15 @@ const game = (function () {
   }
 
   //Turn Module
-  function playerTurns(i) {
+  function playerTurns(grid, i) {
     switch (playerOneTurn) {
       case true:
-        render(players[0].marker, i);
+        interHold(players[0].marker, grid, i);
         playerOneTurn = false;
         break;
 
       case false:
-        render(players[1].marker, i);
+        interHold(players[1].marker, grid, i);
         playerOneTurn = true;
         break;
     }
@@ -94,8 +108,15 @@ const game = (function () {
     gameBoard.push({ grid, marker: "" });
   }
 
+  //Reset Module
+  function resetFunc() {
+    playerOneTurn = true;
+    isListening = true;
+    gameBoard.forEach((n) => {
+      n.marker = "";
+    });
+    render();
+  }
   //ScoreBoard Module
   //
 })();
-
-let test;

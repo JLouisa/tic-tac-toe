@@ -1,5 +1,8 @@
 const game = (function () {
   let players = [];
+  let gameBoard = [];
+  let boardGrid = [];
+  let markers = "";
   let playerOneTurn = true;
 
   //Cache DOM
@@ -18,13 +21,14 @@ const game = (function () {
   }
 
   //Listener
-  function listener(grid) {
+  function listener(grid, i) {
     grid.addEventListener("click", () => {
-      grid.style.backgroundColor = "red";
+      grid.textContent = gameBoard[i].marker;
       console.log(grid);
+      console.log(gameBoard[0].marker);
+      playerTurns();
     });
   }
-
   playBtnEl.addEventListener("click", () => {
     getPlayerNames();
   });
@@ -38,18 +42,27 @@ const game = (function () {
 
   //Creator
   function createBoard() {
-    let gameBoard = [];
     for (let i = 0; i < 9; i++) {
-      gameBoard[i] = document.createElement("div");
-      gameBoard[i].classList.add("square", `row${i}`);
-      render(gameBoard[i]);
-      listener(gameBoard[i]);
+      boardGrid[i] = document.createElement("div");
+      Namer(boardGrid[i], [i]);
+      render(boardGrid[i]);
+      displayController(boardGrid[i]);
+      listener(boardGrid[i], [i]);
     }
+  }
+
+  //Name Class
+  function Namer(name, ilet) {
+    name.classList.add("square", `row${ilet}`);
   }
 
   //Renderer
   function render(data) {
     boardEl.appendChild(data);
+    // for (n in gameBoard)
+    //   n.forEach((blocks) => {
+    //     console.log(blocks);
+    //   });
   }
 
   //Hider
@@ -62,34 +75,28 @@ const game = (function () {
   //Turn Module
   function playerTurns() {
     switch (playerOneTurn) {
-      case "true": {
-        ("route 1");
+      case true:
         players[0].marker;
+        console.log("Player One turn");
         playerOneTurn = false;
         break;
-      }
-      case "false": {
+
+      case false:
         players[1].marker;
+        console.log("Player Two turn");
         playerOneTurn = true;
         break;
-      }
     }
   }
 
-  //DisplayController Module
+  // DisplayController Module
+  function displayController(grid) {
+    gameBoard.push({ grid, marker: "X" });
+    // render();
+  }
 
   //Disable marked grids
 
   //ScoreBoard Module
   //
 })();
-
-// let marks = {
-//   row1: "O",
-//   row2: "X",
-//   row3: "X",
-//   row4: "O",
-// };
-
-// let marksX = ["row1", "row4", "row5"];
-// let marksO = ["row0", "row3", "row9"];

@@ -113,67 +113,84 @@ const game = (function () {
     });
     render();
     recurListener();
-    console.log("2 ");
-    console.log(gameBoard);
   }
 
   //Game Logic
   function gameLogic() {
     for (let x = 0; x < 1; x++) {
       if (
+        //First Row
         (gameBoard[x].marker == gameBoard[x + 1].marker &&
           gameBoard[x + 1].marker == gameBoard[x + 2].marker &&
           gameBoard[x].marker == "X") ||
-        (gameBoard[x].marker == gameBoard[x + 3].marker &&
-          gameBoard[x].marker == gameBoard[x + 6].marker &&
-          gameBoard[x].marker == "X") ||
-        (gameBoard[x + 3].marker == gameBoard[x + 1].marker &&
-          gameBoard[x + 3].marker == gameBoard[x + 2].marker &&
+        (gameBoard[x].marker == gameBoard[x + 1].marker &&
+          gameBoard[x + 1].marker == gameBoard[x + 2].marker &&
+          gameBoard[x].marker == "O") ||
+        //Second Row
+        (gameBoard[x + 3].marker == gameBoard[x + 4].marker &&
+          gameBoard[x + 4].marker == gameBoard[x + 5].marker &&
           gameBoard[x + 3].marker == "X") ||
-        (gameBoard[x + 1].marker == gameBoard[x + 3].marker &&
-          gameBoard[x + 1].marker == gameBoard[x + 6].marker &&
+        (gameBoard[x + 3].marker == gameBoard[x + 4].marker &&
+          gameBoard[x + 4].marker == gameBoard[x + 5].marker &&
+          gameBoard[x + 3].marker == "O") ||
+        //Third Row
+        (gameBoard[x].marker == gameBoard[x + 3].marker &&
+          gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
           gameBoard[x + 1].marker == "X") ||
-        (gameBoard[x + 2].marker == gameBoard[x + 3].marker &&
-          gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
+        (gameBoard[x].marker == gameBoard[x + 3].marker &&
+          gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
+          gameBoard[x].marker == "O") ||
+        //First Column
+        (gameBoard[x].marker == gameBoard[x + 3].marker &&
+          gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
+          gameBoard[x].marker == "X") ||
+        (gameBoard[x].marker == gameBoard[x + 3].marker &&
+          gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
+          gameBoard[x].marker == "O") ||
+        //Second Column
+        (gameBoard[x + 1].marker == gameBoard[x + 4].marker &&
+          gameBoard[x + 4].marker == gameBoard[x + 7].marker &&
+          gameBoard[x + 1].marker == "X") ||
+        (gameBoard[x + 1].marker == gameBoard[x + 4].marker &&
+          gameBoard[x + 4].marker == gameBoard[x + 7].marker &&
+          gameBoard[x + 1].marker == "O") ||
+        //Third Column
+        (gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
+          gameBoard[x + 6].marker == gameBoard[x + 8].marker &&
           gameBoard[x + 2].marker == "X") ||
+        (gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
+          gameBoard[x + 6].marker == gameBoard[x + 8].marker &&
+          gameBoard[x + 2].marker == "O") ||
+        //Left2Right Diagonal
         (gameBoard[x].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 8].marker &&
           gameBoard[x].marker == "X") ||
+        (gameBoard[x].marker == gameBoard[x + 4].marker &&
+          gameBoard[x + 4].marker == gameBoard[x + 8].marker &&
+          gameBoard[x].marker == "O") ||
+        //Right2Left Diagonal
         (gameBoard[x + 2].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 6].marker &&
           gameBoard[x + 2].marker == "X") ||
-        (gameBoard[x].marker == gameBoard[x + 1].marker &&
-          gameBoard[x + 1].marker == gameBoard[x + 2].marker &&
-          gameBoard[x].marker == "O") ||
-        (gameBoard[x].marker == gameBoard[x + 3].marker &&
-          gameBoard[x].marker == gameBoard[x + 6].marker &&
-          gameBoard[x].marker == "O") ||
-        (gameBoard[x + 3].marker == gameBoard[x + 1].marker &&
-          gameBoard[x + 3].marker == gameBoard[x + 2].marker &&
-          gameBoard[x].marker == "O") ||
-        (gameBoard[x + 1].marker == gameBoard[x + 3].marker &&
-          gameBoard[x + 1].marker == gameBoard[x + 6].marker &&
-          gameBoard[x].marker == "O") ||
-        (gameBoard[x + 2].marker == gameBoard[x + 3].marker &&
-          gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
-          gameBoard[x].marker == "O") ||
-        (gameBoard[x].marker == gameBoard[x + 4].marker &&
-          gameBoard[x + 4].marker == gameBoard[x + 8].marker &&
-          gameBoard[x].marker == "O") ||
-        (gameBoard[x + 2].marker == gameBoard[x + 2].marker &&
+        (gameBoard[x + 2].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 6].marker &&
-          gameBoard[x].marker == "O")
+          gameBoard[x + 2].marker == "O")
       ) {
         alert("You have won");
       }
     }
-    // for (let y = 0; y < 9; y++) {
-    //   if (gameBoard[y].marker !== "") {
-    //     fullBoard = true;
-    //   } else if (fullBoard == true && y > 7) {
-    //     resetFunc();
-    //   }
-    // }
+    let b = 0;
+    for (let y = 0; y < 9; y++) {
+      if (gameBoard[y].marker !== "") {
+        b += 1;
+      }
+      if (b == 9 && y <= 8) {
+        alert("It's a tie!");
+        resetFunc();
+        break;
+      }
+    }
+    b = 0;
   }
 
   //ScoreBoard Module

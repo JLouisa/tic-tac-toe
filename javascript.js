@@ -22,15 +22,6 @@ const game = (function () {
   }
 
   //Init Listener
-  function listener(grid, i) {
-    grid.addEventListener(
-      "click",
-      () => {
-        action(grid, i);
-      },
-      { once: isListening }
-    );
-  }
   playBtnEl.addEventListener("click", () => {
     getPlayerNames();
   });
@@ -40,16 +31,18 @@ const game = (function () {
 
   //Recurring Listener
   function recurListener() {
-    for (n of gameBoard) {
-      n.grid.addEventListener("click", () => {
-        playerTurns();
-      });
-    }
-  }
-
-  //Action after Listening
-  function action(grid, i) {
-    playerTurns(grid, i);
+    gameBoard.forEach((n) => {
+      console.log("L1 " + n.grid);
+      n.grid.addEventListener(
+        "click",
+        () => {
+          console.log(gameBoard.indexOf(n));
+          playerTurns(n.grid, gameBoard.indexOf(n));
+        },
+        { once: isListening }
+      );
+    });
+    console.log(gameBoard);
   }
 
   //Factory for Players
@@ -65,9 +58,9 @@ const game = (function () {
       boardGrid[i] = document.createElement("div");
       boardEl.appendChild(boardGrid[i]);
       Namer(boardGrid[i], [i]);
-      displayController(boardGrid[i]);
-      listener(boardGrid[i], [i]);
+      gameBoard.push({ grid: boardGrid[i], marker: "" });
     }
+    recurListener();
   }
 
   //Name Class
@@ -83,8 +76,8 @@ const game = (function () {
   }
 
   //Intermediate
-  function interHold(pMark, i, ...a) {
-    gameBoard[a[0]].marker = pMark;
+  function interHold(pMark, i, a) {
+    gameBoard[a].marker = pMark;
     render();
   }
 
@@ -110,10 +103,11 @@ const game = (function () {
     }
   }
 
-  // DisplayController Module
-  function displayController(grid) {
-    gameBoard.push({ grid, marker: "" });
-  }
+  // // DisplayController Module
+  // function displayController(grid) {
+  //   gameBoard.push({ grid, marker: "" });
+  //   recurListener();
+  // }
 
   //Reset Module
   function resetFunc() {

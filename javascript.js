@@ -10,14 +10,42 @@ const game = (function () {
   const formsEl = document.querySelector(".getForms");
   const playerName1El = document.querySelector("#playerOne");
   const playerName2El = document.querySelector("#playerTwo");
+  const player2 = document.querySelector("#player2");
   const resetBtn = document.querySelector("#reset");
+  const cpuCheck = document.querySelector("#CPU");
   const markerX = "X";
   const markerO = "O";
 
+  console.log(cpuCheck.checked);
+
+  //CPU Toggle
+  function cpuToggle() {
+    if (cpuCheck.checked == true) {
+      player2.setAttribute("style", "visibility: hidden;");
+      player2.value = "";
+    } else {
+      player2.setAttribute("style", "visibility: visible;");
+    }
+  }
+
+  //Verifying Player names
+  function verifyNames() {
+    let playerName1 = playerName1El.value;
+    let playerName2 = playerName2El.value;
+
+    if (playerName1 == "") {
+      playerName1 = "Player 1";
+    }
+    if (playerName2 == "") {
+      playerName2 = "Player 2";
+    }
+    createPlayerNames(playerName1, playerName2);
+  }
+
   //Setup Players
-  function getPlayerNames() {
-    createPlayer(playerName1El.value, markerX);
-    createPlayer(playerName2El.value, markerO);
+  function createPlayerNames(player1, player2) {
+    createPlayer(player1, markerX);
+    createPlayer(player2, markerO);
     createBoard();
     hider();
   }
@@ -30,8 +58,9 @@ const game = (function () {
   }
 
   //Listener Module
+  cpuCheck.addEventListener("click", cpuToggle);
   playBtnEl.addEventListener("click", () => {
-    getPlayerNames();
+    verifyNames();
   });
   resetBtn.addEventListener("click", () => {
     resetFunc();
@@ -46,9 +75,10 @@ const game = (function () {
 
   //Factory for Players
   createPlayer = function (name, marker) {
-    const playerName = name.toLowerCase();
-    const playerMarker = marker;
+    // const playerName = name;
+    // const playerMarker = marker;
     players.push({ name, marker });
+    console.log(players);
   };
 
   //Creator

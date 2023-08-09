@@ -29,13 +29,9 @@ const game = (function () {
   });
   function recurListener() {
     gameBoard.forEach((n) => {
-      n.grid.addEventListener(
-        "click",
-        () => {
-          playerTurns(n.grid, gameBoard.indexOf(n));
-        },
-        { once: true }
-      );
+      n.grid.addEventListener("click", () => {
+        playerTurns(n.grid, gameBoard.indexOf(n));
+      });
     });
   }
 
@@ -69,11 +65,26 @@ const game = (function () {
     });
   }
 
-  //Intermediate
+  //Intermediate Player One
   function interHold(pMark, i, a) {
-    gameBoard[a].marker = pMark;
-    render();
-    gameLogic();
+    if (gameBoard[a].marker == "") {
+      gameBoard[a].marker = pMark;
+      render();
+      gameLogic();
+      playerOneTurn = false;
+    }
+    //else {Wait for Action}
+  }
+
+  //Intermediate Player Two
+  function interHold2(pMark, i, a) {
+    if (gameBoard[a].marker == "") {
+      gameBoard[a].marker = pMark;
+      render();
+      gameLogic();
+      playerOneTurn = true;
+    }
+    //else {Wait for Action}
   }
 
   //Hider
@@ -83,17 +94,18 @@ const game = (function () {
     boardEl.setAttribute("style", "display: grid;");
   }
 
+  //Wait for Action
+  //
+
   //Turn Module
   function playerTurns(grid, i) {
     switch (playerOneTurn) {
       case true:
-        playerOneTurn = false;
         interHold(players[0].marker, grid, i);
         break;
 
       case false:
-        playerOneTurn = true;
-        interHold(players[1].marker, grid, i);
+        interHold2(players[1].marker, grid, i);
         break;
     }
   }
@@ -101,13 +113,11 @@ const game = (function () {
   //Reset Module
   function resetFunc() {
     playerOneTurn = true;
-    console.log("1 ");
     console.log(gameBoard);
     gameBoard.forEach((n) => {
       n.marker = "";
     });
     render();
-    recurListener();
   }
 
   //Game Logic
@@ -190,4 +200,6 @@ const game = (function () {
   }
 
   //ScoreBoard Module
+
+  //Duplicate eventlisteners issue with resetting.
 })();

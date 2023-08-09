@@ -84,8 +84,8 @@ const game = (function () {
     });
   }
   function displayScores() {
-    playerOneScore.textContent = "0";
-    playerTwoScore.textContent = "0";
+    playerOneScore.textContent = score[0].count;
+    playerTwoScore.textContent = score[1].count;
   }
   function displayPlayers(n1, n2) {
     playerOne.textContent = n1;
@@ -182,12 +182,12 @@ const game = (function () {
     switch (emblem) {
       case "X": {
         score[0].count += 1;
-        console.log(score);
+        displayScores();
         break;
       }
       case "O": {
         score[1].count += 1;
-        console.log(score);
+        displayScores();
         break;
       }
     }
@@ -205,7 +205,7 @@ const game = (function () {
     }
     playerOneTurn = true;
     render();
-    console.log(score);
+    displayScores();
   }
   // -------------------------------------------------------------------------
   //Game Logic

@@ -65,29 +65,24 @@ const game = (function () {
     });
   }
 
-  //Intermediate Player One
-  function interHold(pMark, i, a) {
-    if (gameBoard[a].marker == "") {
-      gameBoard[a].marker = pMark;
-      render();
-      gameLogic();
-      playerOneTurn = false;
+  //DisplayController Player One
+  function displayController(pMark, i, a) {
+    switch (gameBoard[a].marker) {
+      case "": {
+        gameBoard[a].marker = pMark;
+        render();
+        gameLogic();
+        playerOneTurn == true ? (playerOneTurn = false) : (playerOneTurn = true);
+        break;
+      }
+      case !"": {
+        //else {Wait for Action}
+        break;
+      }
     }
-    //else {Wait for Action}
   }
 
-  //Intermediate Player Two
-  function interHold2(pMark, i, a) {
-    if (gameBoard[a].marker == "") {
-      gameBoard[a].marker = pMark;
-      render();
-      gameLogic();
-      playerOneTurn = true;
-    }
-    //else {Wait for Action}
-  }
-
-  //Hider
+  //Hide Forms after game start
   function hider() {
     formsEl.setAttribute("style", "display: none;");
     playBtnEl.setAttribute("style", "display: none;");
@@ -101,22 +96,21 @@ const game = (function () {
   function playerTurns(grid, i) {
     switch (playerOneTurn) {
       case true:
-        interHold(players[0].marker, grid, i);
+        displayController(players[0].marker, grid, i);
         break;
 
       case false:
-        interHold2(players[1].marker, grid, i);
+        displayController(players[1].marker, grid, i);
         break;
     }
   }
 
   //Reset Module
   function resetFunc() {
-    playerOneTurn = true;
-    console.log(gameBoard);
     gameBoard.forEach((n) => {
       n.marker = "";
     });
+    playerOneTurn = true;
     render();
   }
 

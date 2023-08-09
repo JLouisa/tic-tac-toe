@@ -90,11 +90,18 @@ const game = (function () {
     playerOneScore.textContent = score[0].count;
     playerTwoScore.textContent = score[1].count;
     setTimeout(function () {
-      if (emblem == "X") {
-        winningMsgEl.textContent = `${playerName1} won this round!`;
-      }
-      if (emblem == "O") {
-        winningMsgEl.textContent = `${playerName2} won this round!`;
+      switch (emblem) {
+        case "X": {
+          winningMsgEl.textContent = `${playerName1} won this round!`;
+          break;
+        }
+        case "O": {
+          winningMsgEl.textContent = `${playerName2} won this round!`;
+          break;
+        }
+        default: {
+          winningMsgEl.textContent = `It's a tie! Try harder!!`;
+        }
       }
     }, 1000);
   }
@@ -217,6 +224,7 @@ const game = (function () {
     if (mReset == true) {
       score.forEach((n) => {
         n.count = 0;
+        mReset = false;
       });
     }
     playerOneTurn = true;
@@ -312,8 +320,10 @@ const game = (function () {
         winD = 0;
       }
       if (!game.includes("")) {
-        alert("It's a tie! Try harder!!");
-        resetFunc();
+        setTimeout(resetFunc, 1000);
+        setTimeout(function () {
+          alert("It's a tie! Try harder!!");
+        }, 1000);
         break;
       }
     }

@@ -176,7 +176,7 @@ const game = (function () {
           gameBoard[x + 2].marker == "O")
       ) {
         alert("You have won");
-        // resetFunc();
+        resetFunc();
       }
     }
     let b = 0;

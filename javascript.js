@@ -140,7 +140,8 @@ const game = (function () {
           winR = 0;
         }
         if (winR === 3) {
-          alert("You won in Row");
+          // alert("You won in Row");
+          // resetFunc();
           break;
         }
       }
@@ -156,7 +157,8 @@ const game = (function () {
           winC = 0;
         }
         if (winC === 3) {
-          alert("You won in Column");
+          // alert("You won in Column");
+          // resetFunc();
           break;
         }
       }
@@ -181,8 +183,8 @@ const game = (function () {
           winD = 0;
         }
         if (winD === 3) {
-          alert("You won in Diagonal");
-
+          // alert("You won in Diagonal");
+          // resetFunc();
           break;
         }
 
@@ -197,13 +199,15 @@ const game = (function () {
       //-----------Rest--------------
 
       if (winR === 3 || winC === 3 || winD === 3) {
+        resetFunc();
+        alert(`${mark} won the game`);
         break;
       } else {
         winC = 0;
         winR = 0;
         winD = 0;
       }
-    }
+    } //MasterLoop
   }
 
   //ScoreBoard Module

@@ -11,23 +11,32 @@ const game = (function () {
   const playerName1El = document.querySelector("#playerOne");
   const playerName2El = document.querySelector("#playerTwo");
   const resetBtn = document.querySelector("#reset");
+  const markerX = "X";
+  const markerO = "O";
 
   //Setup Players
   function getPlayerNames() {
-    createPlayer(playerName1El.value, "X");
-    createPlayer(playerName2El.value, "O");
+    createPlayer(playerName1El.value, markerX);
+    createPlayer(playerName2El.value, markerO);
     createBoard();
     hider();
   }
 
-  //Init Listener
+  //Hide Forms after game start
+  function hider() {
+    formsEl.setAttribute("style", "display: none;");
+    playBtnEl.setAttribute("style", "display: none;");
+    boardEl.setAttribute("style", "display: grid;");
+  }
+
+  //Listener Module
   playBtnEl.addEventListener("click", () => {
     getPlayerNames();
   });
   resetBtn.addEventListener("click", () => {
     resetFunc();
   });
-  function recurListener() {
+  function listener() {
     gameBoard.forEach((n) => {
       n.grid.addEventListener("click", () => {
         playerTurns(n.grid, gameBoard.indexOf(n));
@@ -50,7 +59,7 @@ const game = (function () {
       Namer(boardGrid[i], [i]);
       gameBoard.push({ grid: boardGrid[i], marker: "" });
     }
-    recurListener();
+    listener();
   }
 
   //Name Class
@@ -71,7 +80,7 @@ const game = (function () {
       case "": {
         gameBoard[a].marker = pMark;
         render();
-        gameLogic();
+        gameLogic(pMark);
         playerOneTurn == true ? (playerOneTurn = false) : (playerOneTurn = true);
         break;
       }
@@ -80,13 +89,6 @@ const game = (function () {
         break;
       }
     }
-  }
-
-  //Hide Forms after game start
-  function hider() {
-    formsEl.setAttribute("style", "display: none;");
-    playBtnEl.setAttribute("style", "display: none;");
-    boardEl.setAttribute("style", "display: grid;");
   }
 
   //Wait for Action
@@ -113,84 +115,95 @@ const game = (function () {
     playerOneTurn = true;
     render();
   }
-
+  // -------------------------------------------------------------------------
   //Game Logic
-  function gameLogic() {
-    for (let x = 0; x < 1; x++) {
-      if (
-        //First Row
-        (gameBoard[x].marker == gameBoard[x + 1].marker &&
-          gameBoard[x + 1].marker == gameBoard[x + 2].marker &&
-          gameBoard[x + 1].marker == "X") ||
-        (gameBoard[x].marker == gameBoard[x + 1].marker &&
-          gameBoard[x + 1].marker == gameBoard[x + 2].marker &&
-          gameBoard[x].marker == "O") ||
-        //Second Row
-        (gameBoard[x + 3].marker == gameBoard[x + 4].marker &&
-          gameBoard[x + 4].marker == gameBoard[x + 5].marker &&
-          gameBoard[x + 3].marker == "X") ||
-        (gameBoard[x + 3].marker == gameBoard[x + 4].marker &&
-          gameBoard[x + 4].marker == gameBoard[x + 5].marker &&
-          gameBoard[x + 3].marker == "O") ||
-        // Third Row
-        (gameBoard[x].marker == gameBoard[x + 3].marker &&
-          gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
-          gameBoard[x].marker == "X") ||
-        (gameBoard[x].marker == gameBoard[x + 3].marker &&
-          gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
-          gameBoard[x].marker == "O") ||
-        //First Column
-        (gameBoard[x].marker == gameBoard[x + 3].marker &&
-          gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
-          gameBoard[x].marker == "X") ||
-        (gameBoard[x].marker == gameBoard[x + 3].marker &&
-          gameBoard[x + 3].marker == gameBoard[x + 6].marker &&
-          gameBoard[x].marker == "O") ||
-        //Second Column
-        (gameBoard[x + 1].marker == gameBoard[x + 4].marker &&
-          gameBoard[x + 4].marker == gameBoard[x + 7].marker &&
-          gameBoard[x + 4].marker == "X") ||
-        (gameBoard[x + 1].marker == gameBoard[x + 4].marker &&
-          gameBoard[x + 4].marker == gameBoard[x + 7].marker &&
-          gameBoard[x + 1].marker == "O") ||
-        //Third Column
-        (gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
-          gameBoard[x + 5].marker == gameBoard[x + 8].marker &&
-          gameBoard[x + 2].marker == "X") ||
-        (gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
-          gameBoard[x + 5].marker == gameBoard[x + 8].marker &&
-          gameBoard[x + 2].marker == "O") ||
-        //Left2Right Diagonal
-        (gameBoard[x].marker == gameBoard[x + 4].marker &&
-          gameBoard[x + 4].marker == gameBoard[x + 8].marker &&
-          gameBoard[x].marker == "X") ||
-        (gameBoard[x].marker == gameBoard[x + 4].marker &&
-          gameBoard[x + 4].marker == gameBoard[x + 8].marker &&
-          gameBoard[x].marker == "O") ||
-        // Right2Left Diagonal
-        (gameBoard[x + 2].marker == gameBoard[x + 4].marker &&
-          gameBoard[x + 4].marker == gameBoard[x + 6].marker &&
-          gameBoard[x + 2].marker == "X") ||
-        (gameBoard[x + 2].marker == gameBoard[x + 4].marker &&
-          gameBoard[x + 4].marker == gameBoard[x + 6].marker &&
-          gameBoard[x + 2].marker == "O")
-      ) {
-        alert("You have won");
-        resetFunc();
+  function gameLogic(mark) {
+    let game = [];
+    gameBoard.forEach((n) => {
+      game.push(n.marker);
+    });
+
+    let winR = 0;
+    let winC = 0;
+    let winD = 0;
+    let r = 0;
+    let c = 0;
+    let d = 0;
+    let d2 = 4;
+
+    for (let x = 0; x < 8; x += 3) {
+      // -----------Row--------------
+      for (; r < x + 3; r++) {
+        if (game[r] === mark) {
+          winR += 1;
+        } else {
+          winR = 0;
+        }
+        if (winR === 3) {
+          alert("You won in Row");
+          break;
+        }
       }
-    }
-    let b = 0;
-    for (let y = 0; y < 9; y++) {
-      if (gameBoard[y].marker !== "") {
-        b += 1;
+
+      // -----------Column--------------
+      for (; c < x + 8; c += 3) {
+        if (winR == 3) {
+          break;
+        }
+        if (game[c] === mark) {
+          winC += 1;
+        } else {
+          winC = 0;
+        }
+        if (winC === 3) {
+          alert("You won in Column");
+          break;
+        }
       }
-      if (b == 9 && y <= 8) {
-        alert("It's a tie!");
-        resetFunc();
+      if (x == 0) {
+        c = 1;
+      }
+      if (x == 3) {
+        c = 2;
+      }
+      if (x == 6) {
+        c = 3;
+      }
+
+      // -----------Diagonal--------------
+      for (; d < x + 9; d += d2) {
+        if (winC == 3 || winR == 3) {
+          break;
+        }
+        if (game[d] === mark) {
+          winD += 1;
+        } else {
+          winD = 0;
+        }
+        if (winD === 3) {
+          alert("You won in Diagonal");
+
+          break;
+        }
+
+        if (d >= 8 && d2 === 4) {
+          d = 0;
+          d2 = 2;
+        }
+        if (d >= 8 && d2 == 2) {
+          break;
+        }
+      }
+      //-----------Rest--------------
+
+      if (winR === 3 || winC === 3 || winD === 3) {
         break;
+      } else {
+        winC = 0;
+        winR = 0;
+        winD = 0;
       }
     }
-    b = 0;
   }
 
   //ScoreBoard Module

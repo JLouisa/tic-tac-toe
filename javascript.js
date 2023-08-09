@@ -155,10 +155,10 @@ const game = (function () {
           gameBoard[x + 1].marker == "O") ||
         //Third Column
         (gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
-          gameBoard[x + 6].marker == gameBoard[x + 8].marker &&
+          gameBoard[x + 5].marker == gameBoard[x + 8].marker &&
           gameBoard[x + 2].marker == "X") ||
         (gameBoard[x + 2].marker == gameBoard[x + 5].marker &&
-          gameBoard[x + 6].marker == gameBoard[x + 8].marker &&
+          gameBoard[x + 5].marker == gameBoard[x + 8].marker &&
           gameBoard[x + 2].marker == "O") ||
         //Left2Right Diagonal
         (gameBoard[x].marker == gameBoard[x + 4].marker &&
@@ -167,7 +167,7 @@ const game = (function () {
         (gameBoard[x].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 8].marker &&
           gameBoard[x].marker == "O") ||
-        //Right2Left Diagonal
+        // Right2Left Diagonal
         (gameBoard[x + 2].marker == gameBoard[x + 4].marker &&
           gameBoard[x + 4].marker == gameBoard[x + 6].marker &&
           gameBoard[x + 2].marker == "X") ||
@@ -176,7 +176,7 @@ const game = (function () {
           gameBoard[x + 2].marker == "O")
       ) {
         alert("You have won");
-        resetFunc();
+        // resetFunc();
       }
     }
     let b = 0;
@@ -194,6 +194,4 @@ const game = (function () {
   }
 
   //ScoreBoard Module
-
-  //Duplicate eventlisteners issue with resetting.
 })();

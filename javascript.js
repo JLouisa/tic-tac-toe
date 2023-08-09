@@ -41,7 +41,6 @@ const game = (function () {
     playerTwoScore.textContent = "0";
     displayScores(playerOne);
   }
-
   function createBoard() {
     for (let i = 0; i < 9; i++) {
       boardGrid[i] = document.createElement("div");
@@ -300,6 +299,6 @@ const game = (function () {
         resetFunc();
         break;
       }
-    } //MasterLoop
+    }
   }
 })();

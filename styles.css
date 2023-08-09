@@ -5,6 +5,7 @@
 :root {
   font-family: inherit;
   font-size: 16px;
+  --font-color: #009879;
   --bg-color: #f6f8fa;
   --border-color: #d0d7de;
   --dark-color: #1f2329;
@@ -45,7 +46,6 @@ footer {
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  height: 100%;
   width: 100%;
   flex: 1;
   border-top: 1px solid var(--border-color);
@@ -76,7 +76,6 @@ footer {
   padding: 40px 80px;
   vertical-align: top;
   white-space: nowrap;
-  z-index: 9;
   border: 0;
   transition: box-shadow 0.2s;
 }
@@ -98,7 +97,10 @@ footer {
   min-height: 50vh;
   max-width: 70vw;
   width: 100%;
+  height: 75vh;
   gap: 3rem;
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 0px;
 }
 
@@ -162,7 +164,6 @@ h2 {
   padding: 20px 40px;
   vertical-align: top;
   white-space: nowrap;
-  z-index: 9;
   border: 0;
   transition: box-shadow 0.2s;
 }
@@ -201,9 +202,10 @@ h2 {
   padding: 0;
   background-color: white;
   border: 1px solid black;
-  font-size: 6em;
+  font-size: 7em;
   user-select: none;
   font-family: "Roboto", sans-serif;
+  color: var(--font-color);
 }
 
 .getInfo {
@@ -261,4 +263,37 @@ form:focus {
 #CPU {
   width: 20px;
   height: 20px;
+}
+
+.square:active {
+  transform: scale(1.05);
+  transition: ease-in-out;
+  transition-duration: 300ms;
+}
+
+.winner {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  border: 3px solid black;
+  background-color: white;
+  width: 60vw;
+  height: 60vh;
+  text-align: center;
+  padding: 20px;
+  gap: 2rem;
+}
+
+.winningMsg {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.congratz {
+  color: var(--font-color);
+  font-weight: 700;
+  font-size: 4rem;
+  padding: 0px;
 }

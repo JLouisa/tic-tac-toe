@@ -9,7 +9,9 @@ const game = (function () {
   let mReset = false;
 
   //Cache DOM
-  const mainEl = document.querySelector(".main");
+  const winner = document.querySelector(".winner");
+  const winningMsgEl = document.querySelector(".winningMsg");
+  const contintueBtn = document.querySelector("#continueBtn");
   const display = document.querySelector(".display");
   const playBtnEl = document.querySelector("#playBtn");
   const boardEl = document.querySelector(".board");
@@ -53,6 +55,7 @@ const game = (function () {
 
   //Hide Forms after game start
   function hider() {
+    winner.setAttribute("style", "display: none;");
     formsEl.setAttribute("style", "display: none;");
     playBtnEl.setAttribute("style", "display: none;");
     boardEl.setAttribute("style", "display: grid;");
@@ -61,6 +64,7 @@ const game = (function () {
 
   //Listener Module
   cpuCheck.addEventListener("click", cpuToggle);
+  contintueBtn.addEventListener("click", hider);
   playBtnEl.addEventListener("click", () => {
     verifyNames();
   });
@@ -82,9 +86,15 @@ const game = (function () {
       n.grid.textContent = n.marker;
     });
   }
-  function displayScores() {
+  function displayScores(emblem) {
     playerOneScore.textContent = score[0].count;
     playerTwoScore.textContent = score[1].count;
+    if (emblem == "X") {
+      winningMsgEl.textContent = `${playerName1} won this round!`;
+    }
+    if (emblem == "O") {
+      winningMsgEl.textContent = `${playerName2} won this round!`;
+    }
   }
   function displayPlayers(n1, n2) {
     playerOne.textContent = n1;
@@ -95,6 +105,11 @@ const game = (function () {
   createPlayer = function (name, marker) {
     players.push({ name, marker });
   };
+
+  //Winning Msg Toglle
+  function winToggleOn() {
+    winner.setAttribute("style", "display: flex;");
+  }
 
   //CPU Toggle
   function cpuToggle() {
@@ -171,7 +186,7 @@ const game = (function () {
     }
   }
 
-  //ScoreBoard creator Module
+  //ScoreBoard Creator Module
   function scoreCreator(name, count) {
     score.push({ name, count });
   }
@@ -181,12 +196,12 @@ const game = (function () {
     switch (emblem) {
       case "X": {
         score[0].count += 1;
-        displayScores();
+        displayScores(emblem);
         break;
       }
       case "O": {
         score[1].count += 1;
-        displayScores();
+        displayScores(emblem);
         break;
       }
     }
@@ -286,8 +301,8 @@ const game = (function () {
       //-----------Master Check and Reset--------------
       if (winR === 3 || winC === 3 || winD === 3) {
         scoreKeeper(emblem);
+        winToggleOn();
         resetFunc();
-        alert(`${emblem} won the game`);
         break;
       } else {
         winC = 0;

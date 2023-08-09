@@ -39,12 +39,6 @@ nav {
   text-align: center;
 }
 
-.main {
-  width: 100%;
-  min-height: 80vh;
-  max-width: 980px;
-}
-
 footer {
   display: flex;
   justify-content: center;
@@ -95,9 +89,73 @@ footer {
 
 .main {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-top: 25px;
+  border: 1px solid red;
+  min-height: 50vh;
+  max-width: 50vw;
+  width: 100%;
+  gap: 40px;
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 90px;
+  border: 1px solid blue;
+  align-self: flex-start;
+  height: 40vh;
+  width: 25vh;
+}
+h2 {
+  text-align: center;
+  align-self: flex-end;
+  font-size: 2rem;
+  margin: 0px;
+}
+
+.playerNames {
+  width: 10vw;
+  height: 20vh;
+  border: 1px solid green;
+  margin-bottom: 40px;
+}
+
+.btnstyle2 {
+  align-self: flex-end;
+}
+
+.btnstyle2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  margin: 10px;
+  outline: none;
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #009879, #009879);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #ffffff;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  padding: 20px 40px;
+  vertical-align: top;
+  white-space: nowrap;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow 0.2s;
+}
+.btnstyle2:hover {
+  background: #008369;
+}
+
+.btnstyle2:active {
+  transform: scale(1.08);
+  transition: ease-in;
 }
 
 .content {
@@ -189,8 +247,4 @@ form:focus {
 #CPU {
   width: 20px;
   height: 20px;
-}
-
-#player2 > * {
-  /* display: hidden; */
 }

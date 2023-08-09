@@ -99,9 +99,6 @@ const game = (function () {
           winningMsgEl.textContent = `${playerName2} won this round!`;
           break;
         }
-        default: {
-          winningMsgEl.textContent = `It's a tie! Try harder!!`;
-        }
       }
     }, 1000);
   }
@@ -309,6 +306,13 @@ const game = (function () {
       }
 
       //-----------Master Check and Reset--------------
+      if (!game.includes("")) {
+        setTimeout(resetFunc, 1000);
+        setTimeout(function () {
+          alert("It's a tie! Try harder!!");
+        }, 1000);
+        break;
+      }
       if (winR === 3 || winC === 3 || winD === 3) {
         setTimeout(resetFunc, 1000);
         setTimeout(scoreKeeper(emblem), 1000);
@@ -318,13 +322,6 @@ const game = (function () {
         winC = 0;
         winR = 0;
         winD = 0;
-      }
-      if (!game.includes("")) {
-        setTimeout(resetFunc, 1000);
-        setTimeout(function () {
-          alert("It's a tie! Try harder!!");
-        }, 1000);
-        break;
       }
     }
   }

@@ -89,12 +89,14 @@ const game = (function () {
   function displayScores(emblem) {
     playerOneScore.textContent = score[0].count;
     playerTwoScore.textContent = score[1].count;
-    if (emblem == "X") {
-      winningMsgEl.textContent = `${playerName1} won this round!`;
-    }
-    if (emblem == "O") {
-      winningMsgEl.textContent = `${playerName2} won this round!`;
-    }
+    setTimeout(function () {
+      if (emblem == "X") {
+        winningMsgEl.textContent = `${playerName1} won this round!`;
+      }
+      if (emblem == "O") {
+        winningMsgEl.textContent = `${playerName2} won this round!`;
+      }
+    }, 1000);
   }
   function displayPlayers(n1, n2) {
     playerOne.textContent = n1;
@@ -300,9 +302,9 @@ const game = (function () {
 
       //-----------Master Check and Reset--------------
       if (winR === 3 || winC === 3 || winD === 3) {
-        scoreKeeper(emblem);
-        winToggleOn();
-        resetFunc();
+        setTimeout(resetFunc, 1000);
+        setTimeout(scoreKeeper(emblem), 1000);
+        setTimeout(winToggleOn, 1000);
         break;
       } else {
         winC = 0;

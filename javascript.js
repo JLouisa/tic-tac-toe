@@ -93,7 +93,7 @@ const game = (function () {
   }
 
   //Wait for Action
-  //
+  //function doNothing() {}
 
   //Turn Module
   function playerTurns(grid, i) {
@@ -131,6 +131,7 @@ const game = (function () {
     let c = 0;
     let d = 0;
     let d2 = 4;
+    let d3 = 9;
 
     for (let x = 0; x < 8; x += 3) {
       // -----------Row--------------
@@ -170,7 +171,7 @@ const game = (function () {
       }
 
       // -----------Diagonal--------------
-      for (; d < x + 9; d += d2) {
+      for (; d < d3; d += d2) {
         if (winC == 3 || winR == 3) {
           break;
         }
@@ -182,10 +183,10 @@ const game = (function () {
         if (winD === 3) {
           break;
         }
-
         if (d >= 8 && d2 === 4) {
           d = 0;
           d2 = 2;
+          d3 = 8;
         }
         if (d >= 8 && d2 == 2) {
           break;
@@ -201,6 +202,16 @@ const game = (function () {
         winC = 0;
         winR = 0;
         winD = 0;
+        if (x >= 8) {
+          alert("It's a tie!");
+          resetFunc();
+          break;
+        }
+      }
+      if (!game.includes("")) {
+        alert("It's a tie! Try harder!!");
+        resetFunc();
+        break;
       }
     } //MasterLoop
   }

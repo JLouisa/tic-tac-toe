@@ -72,6 +72,7 @@ const game = (function () {
     gameBoard.forEach((n) => {
       n.grid.textContent = n.marker;
     });
+    console.log(gameBoard);
   }
 
   //DisplayController Player One
@@ -79,9 +80,9 @@ const game = (function () {
     switch (gameBoard[a].marker) {
       case "": {
         gameBoard[a].marker = pMark;
+        playerOneTurn == true ? (playerOneTurn = false) : (playerOneTurn = true);
         render();
         gameLogic(pMark);
-        playerOneTurn == true ? (playerOneTurn = false) : (playerOneTurn = true);
         break;
       }
       case !"": {
@@ -117,7 +118,7 @@ const game = (function () {
   }
   // -------------------------------------------------------------------------
   //Game Logic
-  function gameLogic(mark) {
+  function gameLogic(emblem) {
     let game = [];
     gameBoard.forEach((n) => {
       game.push(n.marker);
@@ -134,14 +135,12 @@ const game = (function () {
     for (let x = 0; x < 8; x += 3) {
       // -----------Row--------------
       for (; r < x + 3; r++) {
-        if (game[r] === mark) {
+        if (game[r] === emblem) {
           winR += 1;
         } else {
           winR = 0;
         }
         if (winR === 3) {
-          // alert("You won in Row");
-          // resetFunc();
           break;
         }
       }
@@ -151,14 +150,12 @@ const game = (function () {
         if (winR == 3) {
           break;
         }
-        if (game[c] === mark) {
+        if (game[c] === emblem) {
           winC += 1;
         } else {
           winC = 0;
         }
         if (winC === 3) {
-          // alert("You won in Column");
-          // resetFunc();
           break;
         }
       }
@@ -177,14 +174,12 @@ const game = (function () {
         if (winC == 3 || winR == 3) {
           break;
         }
-        if (game[d] === mark) {
+        if (game[d] === emblem) {
           winD += 1;
         } else {
           winD = 0;
         }
         if (winD === 3) {
-          // alert("You won in Diagonal");
-          // resetFunc();
           break;
         }
 
@@ -196,11 +191,11 @@ const game = (function () {
           break;
         }
       }
-      //-----------Rest--------------
 
+      //-----------Master Check and Reset--------------
       if (winR === 3 || winC === 3 || winD === 3) {
         resetFunc();
-        alert(`${mark} won the game`);
+        alert(`${emblem} won the game`);
         break;
       } else {
         winC = 0;

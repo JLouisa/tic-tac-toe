@@ -2,9 +2,11 @@ const game = (function () {
   let players = [];
   let gameBoard = [];
   let boardGrid = [];
+  let score = [];
   let playerName1 = "";
   let playerName2 = "";
   let playerOneTurn = true;
+  let mReset = false;
 
   //Cache DOM
   const mainEl = document.querySelector(".main");
@@ -37,7 +39,7 @@ const game = (function () {
     scoreBoard.appendChild(playerTwoScore);
     playerOneScore.textContent = "0";
     playerTwoScore.textContent = "0";
-    displayScores();
+    displayScores(playerOne);
   }
 
   function createBoard() {
@@ -64,6 +66,7 @@ const game = (function () {
     verifyNames();
   });
   resetBtn.addEventListener("click", () => {
+    mReset = true;
     resetFunc();
   });
   function listener() {
@@ -79,11 +82,8 @@ const game = (function () {
     gameBoard.forEach((n) => {
       n.grid.textContent = n.marker;
     });
-    console.log("test");
   }
   function displayScores() {
-    console.log(playerOneScore);
-    console.log(playerTwoScore);
     playerOneScore.textContent = "0";
     playerTwoScore.textContent = "0";
   }
@@ -129,6 +129,8 @@ const game = (function () {
     createPlayer(player1, markerX);
     createPlayer(player2, markerO);
     createBoard();
+    scoreCreator(player1, 0);
+    scoreCreator(player2, 0);
     hider();
   }
 
@@ -169,17 +171,41 @@ const game = (function () {
         break;
     }
   }
-  displayScores();
-  displayScores();
-  displayScores();
+
+  //ScoreBoard creator Module
+  function scoreCreator(name, count) {
+    score.push({ name, count });
+  }
+
+  //ScoreBoard keeper Module
+  function scoreKeeper(emblem) {
+    switch (emblem) {
+      case "X": {
+        score[0].count += 1;
+        console.log(score);
+        break;
+      }
+      case "O": {
+        score[1].count += 1;
+        console.log(score);
+        break;
+      }
+    }
+  }
 
   //Reset Module
   function resetFunc() {
     gameBoard.forEach((n) => {
       n.marker = "";
     });
+    if (mReset == true) {
+      score.forEach((n) => {
+        n.count = 0;
+      });
+    }
     playerOneTurn = true;
     render();
+    console.log(score);
   }
   // -------------------------------------------------------------------------
   //Game Logic
@@ -260,6 +286,7 @@ const game = (function () {
 
       //-----------Master Check and Reset--------------
       if (winR === 3 || winC === 3 || winD === 3) {
+        scoreKeeper(emblem);
         resetFunc();
         alert(`${emblem} won the game`);
         break;
@@ -267,11 +294,6 @@ const game = (function () {
         winC = 0;
         winR = 0;
         winD = 0;
-        if (x >= 8) {
-          alert("It's a tie!");
-          resetFunc();
-          break;
-        }
       }
       if (!game.includes("")) {
         alert("It's a tie! Try harder!!");
@@ -280,6 +302,4 @@ const game = (function () {
       }
     } //MasterLoop
   }
-
-  //ScoreBoard Module
 })();

@@ -221,7 +221,7 @@ const game = (function () {
         setTimeout(resetFunc, 1000);
         setTimeout(function () {
           alert("It's a tie! Try harder!!");
-        });
+        }, 1000);
         break;
       }
       case 1: {

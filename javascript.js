@@ -29,7 +29,7 @@ const game = (function () {
   const markerX = "X";
   const markerO = "O";
 
-  console.log(cpuCheck.checked);
+  // console.log(cpuCheck.checked);
 
   //Creator
   function createDisplayPlayers() {
@@ -63,7 +63,7 @@ const game = (function () {
   }
 
   //Listener Module
-  cpuCheck.addEventListener("click", cpuToggle);
+  // cpuCheck.addEventListener("click", cpuToggle);
   contintueBtn.addEventListener("click", hider);
   playBtnEl.addEventListener("click", () => {
     verifyNames();
@@ -213,6 +213,27 @@ const game = (function () {
     }
   }
 
+  //Process Game logic resutls
+  function processorGL(won, emblem) {
+    switch (won) {
+      case 0: {
+        console.log("It's a tie!");
+        setTimeout(resetFunc, 1000);
+        setTimeout(function () {
+          alert("It's a tie! Try harder!!");
+        });
+        break;
+      }
+      case 1: {
+        console.log(`${emblem} won the Game`);
+        setTimeout(resetFunc, 1000);
+        setTimeout(scoreKeeper(emblem), 1000);
+        setTimeout(winToggleOn, 1000);
+        break;
+      }
+    }
+  }
+
   //Reset Module
   function resetFunc() {
     gameBoard.forEach((n) => {
@@ -231,23 +252,19 @@ const game = (function () {
   // -------------------------------------------------------------------------
   //Game Logic
   function gameLogic(emblem) {
+    let wonGame = false;
     let game = [];
     gameBoard.forEach((n) => {
       game.push(n.marker);
     });
-
     let winR = 0;
     let winC = 0;
     let winD = 0;
-    let r = 0;
-    let c = 0;
-    let d = 0;
-    let d2 = 4;
-    let d3 = 9;
 
-    for (let x = 0; x < 8; x += 3) {
+    for (let x = 0; x < 1; x++) {
       // -----------Row--------------
-      for (; r < x + 3; r++) {
+      let r = 0;
+      while (r < 9) {
         if (game[r] === emblem) {
           winR += 1;
         } else {
@@ -256,11 +273,18 @@ const game = (function () {
         if (winR === 3) {
           break;
         }
+
+        r++;
+        if (r === 3 || r === 6) {
+          winR = 0;
+        }
       }
 
       // -----------Column--------------
-      for (; c < x + 8; c += 3) {
-        if (winR == 3) {
+      let c = 0;
+      let c2 = 0;
+      while (c <= 8) {
+        if (winR === 3) {
           break;
         }
         if (game[c] === emblem) {
@@ -271,20 +295,32 @@ const game = (function () {
         if (winC === 3) {
           break;
         }
-      }
-      if (x == 0) {
-        c = 1;
-      }
-      if (x == 3) {
-        c = 2;
-      }
-      if (x == 6) {
-        c = 3;
+
+        c += 3;
+
+        if (c2 === 0 && c > 8) {
+          winC = 0;
+          c = 1;
+          c2 = 1;
+        }
+        if (c2 === 1 && c > 8) {
+          winC = 0;
+          c = 2;
+          c2 = 2;
+        }
+        if (c2 === 2 && c > 8) {
+          winC = 0;
+          c = 3;
+          c2 = 3;
+        }
       }
 
       // -----------Diagonal--------------
-      for (; d < d3; d += d2) {
-        if (winC == 3 || winR == 3) {
+      let d = 0;
+      let d2 = 4;
+      let d3 = 9;
+      while (d < d3) {
+        if (winC === 3 || winR === 3) {
           break;
         }
         if (game[d] === emblem) {
@@ -300,29 +336,106 @@ const game = (function () {
           d2 = 2;
           d3 = 8;
         }
+        d += d2;
         if (d >= 8 && d2 == 2) {
           break;
         }
       }
+      // -----------End--------------
 
-      //-----------Master Check and Reset--------------
-      if (!game.includes("")) {
-        setTimeout(resetFunc, 1000);
-        setTimeout(function () {
-          alert("It's a tie! Try harder!!");
-        }, 1000);
-        break;
-      }
-      if (winR === 3 || winC === 3 || winD === 3) {
-        setTimeout(resetFunc, 1000);
-        setTimeout(scoreKeeper(emblem), 1000);
-        setTimeout(winToggleOn, 1000);
-        break;
-      } else {
-        winC = 0;
-        winR = 0;
-        winD = 0;
-      }
+      // else {
+      //   processorGL(0, emblem);
+      // }
+    } // Master Loop ends
+    if (winR === 3 || winC === 3 || winD === 3) {
+      wonGame = true;
+      processorGL(1, emblem);
     }
+    if (!game.includes("") && wonGame == false) {
+      processorGL(0, emblem);
+    }
+    winC = 0;
+    winR = 0;
+    winD = 0;
   }
 })();
+
+//----------------------Dev----------------------------
+// // ========================CPU===========CPU==========================
+// function getRandomInt(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
+
+// //Novice
+// function cpuN() {
+//   if (cpuCheck == true) {
+//     let n = 0;
+//     while (n < game.length) {
+//       // console.log(game[n]);
+//       if (game[n] == " ") {
+//         console.log(game);
+//         game[n] = "O";
+//         console.log(`CPU added "O" at ${n}`);
+//         console.log(game);
+//         break;
+//       }
+//       n++;
+//     }
+//   }
+// }
+
+// // Intermediate
+// function cpuI() {
+//   if (cpuCheck == true) {
+//     let n = 0;
+//     let z = 1;
+//     while (n < 40) {
+//       if (z < 20) {
+//         // console.log(game[n]);
+//         let cpuC = [];
+//         cpuC.push(getRandomInt(0, 8));
+//         if (game[cpuC[0]] == " ") {
+//           console.log(game);
+//           console.log(cpuC[0]);
+//           game[cpuC[0]] = "O";
+//           console.log(`CPU added "O" at ${cpuC[0]}`);
+//           console.log("---------0----1----2--|-3----4----5--|-6----7----8-|");
+//           console.log(game);
+//           break;
+//         }
+//         n++;
+//         console.log(`Attempts ${z++}`);
+//       } else {
+//         cpuN();
+//         console.log("Novice used");
+//         break;
+//       }
+//     }
+//   }
+// }
+
+// let start = () => {
+//   cpuI();
+//   gameLogic(mark1, game);
+//   gameLogic(mark2, game);
+//   // console.log(game);
+// };
+
+// let dev1 = () => {
+//   gameLogic(mark1, devgame);
+// };
+// let dev2 = () => {
+//   gameLogic(mark2, devgame);
+// };
+
+// //------------------AI------------------------
+
+// // Array Row = [[1, 2, 3], [4, 5, 6], [7 ,8 ,9]]  = 8 points to win / 5 min
+// // Array Colum =[[1, 4, 7], [2, 5, 8], [3, 6, 9]] = 8 points to win / 5 min
+// //Array Diagonal = [[1, 5, 9], [3, 5, 7]] = 10 points / 7 min
+
+// //Most numbers = 5 (x4)
+// //AVG numbers = 1, 3, 5, 7, 9 (x3)
+// //Least numbers = 2, 4, 6, 8 (x2)

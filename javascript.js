@@ -1,3 +1,5 @@
+//Remake in the works
+
 const game = (function () {
   let players = [];
   let gameBoard = [];
